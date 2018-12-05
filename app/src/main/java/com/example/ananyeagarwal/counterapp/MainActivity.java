@@ -16,6 +16,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "DebugMessage";
     private static int counterValue = 0;
 
+    public void updateCounterDisplay(TextView counterDisplay) {
+        counterDisplay.setText(Integer.toString(counterValue));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,17 +61,44 @@ public class MainActivity extends AppCompatActivity {
         // Add the text field
         counterLayout.addView(counterDisplay, counterDisplayDetails);
 
+        // Make a reset button
+        Button resetButton = new Button(this);
+        resetButton.setText("reset");
+        resetButton.setId(3);
+
+        // Layout parameters for the reset button, (place it below the increment button)
+        RelativeLayout.LayoutParams resetButtonDetails = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        resetButtonDetails.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        resetButtonDetails.addRule(RelativeLayout.BELOW, incrementButton.getId());
+        resetButtonDetails.setMargins(0, 50, 0, 0);
+
+        // Add the button
+        counterLayout.addView(resetButton, resetButtonDetails);
+
         // Load the layout
         setContentView(counterLayout);
 
         Log.i(TAG, "App loaded");
 
-        // Set a listener to the button
+        // Set a listener to the increment button
         incrementButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         counterValue++;
-                        counterDisplay.setText(Integer.toString(counterValue));
+                        updateCounterDisplay(counterDisplay);
+                    }
+                }
+        );
+
+        // Set a listener to the reset button
+        resetButton.setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+                        counterValue = 0;
+                        updateCounterDisplay(counterDisplay);
                     }
                 }
         );
