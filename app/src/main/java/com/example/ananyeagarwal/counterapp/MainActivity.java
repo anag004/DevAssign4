@@ -9,11 +9,12 @@ import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "DebugMessage";
-    private static final int counterValue = 0;
+    private static int counterValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         counterLayout.addView(incrementButton, incrementButtonDetails);
 
         // Create the static text field which will display the counterValue variable
-        TextView counterDisplay = new TextView(this);
+        final TextView counterDisplay = new TextView(this);
         counterDisplay.setText(Integer.toString(counterValue));
         counterDisplay.setId(2);
 
@@ -60,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(counterLayout);
 
         Log.i(TAG, "App loaded");
+
+        // Set a listener to the button
+        incrementButton.setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+                        counterValue++;
+                        counterDisplay.setText(Integer.toString(counterValue));
+                    }
+                }
+        );
     }
 
 }
