@@ -152,6 +152,63 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        // Make standard jump values of 2, 4
+        Button jumpOfTwoButton = new Button(this);
+        jumpOfTwoButton.setText("Jump 2");
+        jumpOfTwoButton.setId(6);
+
+        // Set the layout
+        RelativeLayout.LayoutParams jumpOfTwoButtonDetails = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        jumpOfTwoButtonDetails.addRule(RelativeLayout.BELOW, jumpValueField.getId());
+        jumpOfTwoButtonDetails.addRule(RelativeLayout.LEFT_OF, jumpButton.getId());
+        jumpOfTwoButtonDetails.setMargins(0, 50, 50, 0);
+
+        // Load the button
+        counterLayout.addView(jumpOfTwoButton, jumpOfTwoButtonDetails);
+
+        //Add a listener
+        jumpOfTwoButton.setOnClickListener(
+                new Button.OnClickListener() {
+                    public  void onClick(View v) {
+                        counterValue += 2;
+                        updateCounterDisplay(counterDisplay);
+                    }
+                }
+        );
+
+        // Make the jump of four button
+        Button jumpOfFourButton = new Button(this);
+        jumpOfFourButton.setText("Jump 4");
+        jumpOfFourButton.setId(7);
+
+        // Set the layout
+        RelativeLayout.LayoutParams jumpOfFourButtonDetails = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        jumpOfFourButtonDetails.addRule(RelativeLayout.BELOW, jumpValueField.getId());
+        jumpOfFourButtonDetails.addRule(RelativeLayout.RIGHT_OF, jumpButton.getId());
+        jumpOfFourButtonDetails.setMargins(50, 50, 0, 0);
+
+        // Load the button
+        counterLayout.addView(jumpOfFourButton, jumpOfFourButtonDetails);
+
+        //Add a listener
+        jumpOfFourButton.setOnClickListener(
+                new Button.OnClickListener() {
+                    public  void onClick(View v) {
+                        counterValue += 4;
+                        updateCounterDisplay(counterDisplay);
+                    }
+                }
+        );
+
+
         // Load the layout
         setContentView(counterLayout);
 
