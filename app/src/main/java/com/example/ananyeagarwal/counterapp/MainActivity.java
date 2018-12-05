@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.View;
@@ -78,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
         // Add the button
         counterLayout.addView(resetButton, resetButtonDetails);
 
-        // Load the layout
-        setContentView(counterLayout);
 
         Log.i(TAG, "App loaded");
 
@@ -102,6 +101,60 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        // Add a text field to take the jump number
+        final EditText jumpValueField = new EditText(this);
+        jumpValueField.setHint("Integer jump");
+        jumpValueField.setId(4);
+
+        // Layout parameters for the text field
+        RelativeLayout.LayoutParams jumpValueFieldDetails = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        jumpValueFieldDetails.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        jumpValueFieldDetails.addRule(RelativeLayout.BELOW, resetButton.getId());
+        jumpValueFieldDetails.setMargins(0, 50, 0, 0);
+
+        // Display the field
+        counterLayout.addView(jumpValueField, jumpValueFieldDetails);
+
+        // Add a button to submit the value
+        Button jumpButton = new Button(this);
+        jumpButton.setText("Jump");
+        jumpButton.setId(5);
+
+        // Layout parameters
+        RelativeLayout.LayoutParams jumpButtonDetails = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        jumpButtonDetails.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        jumpButtonDetails.addRule(RelativeLayout.BELOW, jumpValueField.getId());
+        jumpButtonDetails.setMargins(0, 50, 0, 0);
+
+        // Display this button
+        counterLayout.addView(jumpButton, jumpButtonDetails);
+
+        // Add a event listener for the jump button
+        jumpButton.setOnClickListener(
+                new Button.OnClickListener() {
+                    public  void onClick(View v) {
+                        String jumpValue = jumpValueField.getText().toString();
+                        try {
+                            int integerJumpValue = Integer.parseInt(jumpValue);
+                            counterValue += integerJumpValue;
+                            updateCounterDisplay(counterDisplay);
+                        } catch (NumberFormatException e) {
+                            // do nothing
+                        }
+                    }
+                }
+        );
+
+        // Load the layout
+        setContentView(counterLayout);
+
     }
 
 }
